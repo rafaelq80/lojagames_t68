@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.generation.lojagames.model.Produto;
 import com.generation.lojagames.repository.CategoriaRepository;
 import com.generation.lojagames.repository.ProdutoRepository;
+import com.generation.lojagames.service.ProdutoService;
 
 import jakarta.validation.Valid;
 
@@ -26,6 +27,9 @@ import jakarta.validation.Valid;
 @RequestMapping("/produtos")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProdutoController {
+	
+	@Autowired
+	private ProdutoService produtoService;
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
@@ -94,6 +98,13 @@ public class ProdutoController {
 	@GetMapping("/preco_menor/{preco}")
 	public ResponseEntity<List<Produto>> getPrecoMenorQue(@PathVariable BigDecimal preco){ 
 		return ResponseEntity.ok(produtoRepository.findByPrecoLessThanOrderByPrecoDesc(preco));
+	}
+	
+	@PutMapping("curtir/{id}")
+	public ResponseEntity<Produto> curtir(@PathVariable Long id){
+		return produtoService.curtir(id)
+				.map(resposta -> ResponseEntity.ok(resposta))
+				.orElse(ResponseEntity.badRequest().build());
 	}
 	
 }
