@@ -42,6 +42,19 @@ public class Usuario {
 	@Column(name = "data_nascimento")
 	@JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
+	
+/* Método Construtor */
+	
+	public Usuario(Long id, String nome, String usuario, String senha, String foto, LocalDate dataNascimento) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+		this.dataNascimento = dataNascimento;
+	}
+	
+	public Usuario() { }
 
 	/* Insira os Getters and Setters */
 
